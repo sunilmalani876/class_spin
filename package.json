@@ -7,14 +7,29 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm run assets && vite --open",
+    "assets": "assetpack",
+    "prebuild": "assetpack",
+    "watch:assetpack": "assetpack -c",
+    "prestart": "npm run assets"
   },
   "dependencies": {
+    "pixi.js": "^7.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "pixi.js-legacy": "^7.4.2"
+    "gsap": "^3.12.2"
   },
   "devDependencies": {
+    "@assetpack/cli": "^0.7.0",
+    "@assetpack/core": "^0.7.0",
+    "@assetpack/plugin-compress": "^0.7.0",
+    "@assetpack/plugin-ffmpeg": "^0.7.0",
+    "@assetpack/plugin-json": "^0.7.0",
+    "@assetpack/plugin-manifest": "^0.7.0",
+    "@assetpack/plugin-mipmap": "^0.7.0",
+    "@assetpack/plugin-texture-packer": "^0.7.0",
+    "@assetpack/plugin-webfont": "^0.5.1",
     "@eslint/js": "^9.11.1",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",

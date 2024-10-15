@@ -1,0 +1,144 @@
+{
+  "bundles": [
+    {
+      "name": "default",
+      "assets": [
+        {
+          "name": [
+            "audio/bubble-land-sfx.wav"
+          ],
+          "srcs": [
+            "audio/bubble-land-sfx.mp3",
+            "audio/bubble-land-sfx.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/bubbles-falling.wav"
+          ],
+          "srcs": [
+            "audio/bubbles-falling.mp3",
+            "audio/bubbles-falling.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/bubbo-bubbo-bg-music.wav"
+          ],
+          "srcs": [
+            "audio/bubbo-bubbo-bg-music.mp3",
+            "audio/bubbo-bubbo-bg-music.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/cannon-move.wav"
+          ],
+          "srcs": [
+            "audio/cannon-move.mp3",
+            "audio/cannon-move.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/powerup-bomb.wav"
+          ],
+          "srcs": [
+            "audio/powerup-bomb.mp3",
+            "audio/powerup-bomb.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/powerup-super.wav"
+          ],
+          "srcs": [
+            "audio/powerup-super.mp3",
+            "audio/powerup-super.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/powerup-time.wav"
+          ],
+          "srcs": [
+            "audio/powerup-time.mp3",
+            "audio/powerup-time.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/primary-button-press.wav"
+          ],
+          "srcs": [
+            "audio/primary-button-press.mp3",
+            "audio/primary-button-press.ogg"
+          ]
+        },
+        {
+          "name": [
+            "audio/secondary-button-press.wav"
+          ],
+          "srcs": [
+            "audio/secondary-button-press.mp3",
+            "audio/secondary-button-press.ogg"
+          ]
+        },
+        {
+          "name": [
+            "fonts/Bungee-Regular.ttf"
+          ],
+          "srcs": [
+            "fonts/Bungee-Regular.woff2"
+          ],
+          "data": {
+            "tags": {
+              "wf": true
+            }
+          }
+        },
+        {
+          "name": [
+            "fonts/OpenSans-SemiBold.ttf"
+          ],
+          "srcs": [
+            "fonts/OpenSans-SemiBold.woff2"
+          ],
+          "data": {
+            "tags": {
+              "wf": true
+            }
+          }
+        },
+        {
+          "name": [
+            "images/favicon.png"
+          ],
+          "srcs": [
+            "images/favicon.png"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "images/preload",
+      "assets": [
+        {
+          "name": [
+            "images/preload/preload.json"
+          ],
+          "srcs": [
+            "images/preload/preload@1x.json",
+            "images/preload/preload@0.5x.json"
+          ],
+          "data": {
+            "tags": {
+              "m": true,
+              "tps": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
