@@ -132,9 +132,10 @@ class Navigation {
     }
 
     // Add update function if available
-    // if (screen.update) {
-    //   app.ticker.add(screen.update, screen);
-    // }
+    if (screen.update) {
+      console.log("screen");
+      app.ticker.add(screen.update, screen);
+    }
 
     // Show the new screen
     if (screen.show) {
