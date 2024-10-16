@@ -1,12 +1,9 @@
+import { Application } from "pixi.js";
 import { initAssets } from "./assets";
-import { Application, Assets } from "pixi.js";
 import { designConfig } from "./game/designConfig";
-import { LoadScreen } from "./game/screens/LoadScreen";
+import { SpinWheel } from "./game/screens/spinwheel";
 import { navigation } from "./navigation";
 import { storage } from "./stroage";
-import { SpinWheel } from "./game/screens/spinwheel";
-import { getUrlParam } from "./utils/utils";
-import { TitleScreen } from "./game/screens/TitleScreen";
 
 /** The PixiJS app Application instance, shared across the project */
 export const app = new Application<HTMLCanvasElement>({
@@ -40,10 +37,6 @@ function resize() {
   navigation.resize(width, height);
 }
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 /** Setup app and initialise assets */
 async function init() {
   // Add pixi canvas element (app.view) to the document's body
@@ -75,46 +68,14 @@ async function init() {
     "Prize 5",
     "Prize 6",
   ];
-  const targetPrize = "Prize 3"; // This will be the prize where you want the wheel to stop
 
   // Create and prepare the spin wheel
   const spinWheel = new SpinWheel();
+  console.log(spinWheel);
   spinWheel.prepare(backendResponse);
-
-  // Spin to stop at the "Prize 3" slice
-  spinWheel.spinToSlice(targetPrize);
 
   // Navigate to the spin wheel screen
   await navigation.goToScreen(SpinWheel, backendResponse);
-
-  // Spin to stop at the "Prize 3" slice after a delay (simulate backend response)
-  setTimeout(() => {
-    spinWheel.spinToSlice(targetPrize);
-  }, 600);
-
-  // Add ticker to continuously update the wheel
-  // app.ticker.add(() => {
-  //   spinWheel.update(); // Ensure the update function is called every frame
-  // });
-  // navigation.setLoadScreen(LoadScreen);
-  await navigation.goToScreen(TitleScreen);
-
-  // await navigation.goToScreen(TitleScreen);
-  // Show first screen - go straight to game if '?play' param is present in url
-
-  // This is used for debugging
-  // if (getUrlParam("play") !== null) {
-  //   console.log("play");
-  //   // await Assets.loadBundle(TitleScreen.assetBundles);
-  //   // await navigation.goToScreen(GameScreen);
-  // } else if (getUrlParam("loading") !== null) {
-  // await navigation.goToScreen(LoadScreen);
-  //   console.log("l");
-  //   await navigation.goToScreen(LoadScreen);
-  // } else {
-  //   console.log("e");
-  //   await navigation.goToScreen(TitleScreen);
-  // }
 }
 
 await init();

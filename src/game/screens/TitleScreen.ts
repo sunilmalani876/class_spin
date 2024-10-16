@@ -220,43 +220,8 @@ export class TitleScreen extends Container implements AppScreen {
 
     // Set visuals to their respective locations
 
-    // this._title.view.x = w * 0.5;
-    // this._title.view.y = 145;
-
-    // this._pixiLogo.view.x = 55;
-    // this._pixiLogo.view.y = h - 40;
-
-    // this._footer.width = w * 1.2;
-    // this._footer.x = w * 0.5;
-    // this._footer.y = h;
-
-    // this._forkBtn.x = w - this._pixiLogo.view.x;
-    // this._forkBtn.y = this._pixiLogo.view.y + this._forkBtn.height * 0.5 - 5;
-
-    // this._audioBtn.x = w - 40;
-    // this._audioBtn.y = 40;
-
-    // this._cannon.view.x = w * 0.5;
-    // this._cannon.view.y = h - this._footer.height * 0.5;
-
     this._playBtn.x = w * 0.5;
-    this._playBtn.y =
-      this._cannon.view.y -
-      this._cannon.view.height / 2 -
-      this._playBtn.height / 2 +
-      10;
-
-    // this._portholeOne.view.x = 40;
-    // this._portholeOne.view.y = 40;
-
-    // this._portholeTwo.view.x = w - 40;
-    // this._portholeTwo.view.y =
-    // this._title.view.y + this._title.view.height + 10;
-
-    // Set hit area of hit container to fit screen
-    // Leave a little room to prevent interaction bellow the cannon
-    this._hitArea.width = w;
-    this._hitArea.height = h - boardConfig.bounceLine * 0.75;
+    this._playBtn.y = h / 2 - this._playBtn.height / 2 + 10;
   }
 
   /**

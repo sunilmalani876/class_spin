@@ -27,7 +27,7 @@ class Navigation {
   public overlayView = new Container();
 
   /** Current screen being displayed */
-  private currentScreen?: AppScreen;
+  public currentScreen?: AppScreen;
 
   /** Resize function to avoid problems with scope */
   private currentScreenResize?: () => void;
@@ -133,8 +133,12 @@ class Navigation {
 
     // Add update function if available
     if (screen.update) {
-      console.log("screen");
+      // console.log("screen");
       app.ticker.add(screen.update, screen);
+
+      // setTimeout(() => {
+      //   spinWheel.spinToSlice(targetPrize);
+      // }, 600);
     }
 
     // Show the new screen
