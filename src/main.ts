@@ -71,7 +71,7 @@ async function init() {
 
   // Create and prepare the spin wheel
   const spinWheel = new SpinWheel();
-  console.log(spinWheel);
+  // console.log(spinWheel);
   spinWheel.prepare(backendResponse);
 
   // Navigate to the spin wheel screen

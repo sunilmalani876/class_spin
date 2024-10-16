@@ -381,7 +381,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
 
     for (let i = 0; i < this.totalSlices; i++) {
       const sliceAngle = (Math.PI * 2) / this.totalSlices; // Angle for each slice
-      const angle = i * sliceAngle; // Current angle for the slice
+      const angle = i * sliceAngle - Math.PI / 2 - 0.5; // Offset by -90 degrees
 
       // Create the slice graphic
       const graphic = new Graphics();
@@ -437,7 +437,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
 
       // Stop after 1 second and target a prize
       setTimeout(() => {
-        const targetPrize = "Prize 1"; // Change to backend response
+        const targetPrize = "Prize 5"; // Change to backend response
         clearInterval(spinningInterval);
         this.spinToSlice(targetPrize); // Slow down and stop at target
       }, 1000);
@@ -451,9 +451,13 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
 
   // Spin to a specific prize
   public spinToSlice(targetText: string): void {
-    const targetSlice = this.slices.find((slice) => slice.label === targetText);
+    const targetSlice = this.slices.find((slice) => {
+      console.log(slice);
+
+      return slice.label === targetText;
+    });
     if (targetSlice) {
-      const randomSpins = Math.floor(Math.random() * 4 + 3); // Between 3-6 spins
+      const randomSpins = Math.floor(Math.random() * 4) + 3; // Between 3-6 spins
       const sliceIndex = this.slices.indexOf(targetSlice);
       const sliceAngle = 360 / this.totalSlices; // Angle per slice in degrees
 
@@ -462,7 +466,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
       const normalizedCurrentRotation = (currentRotation + 360) % 360; // Normalize to 0-360°
 
       // Calculate the target angle in degrees based on the slice index
-      const targetAngleInDegrees = sliceIndex * sliceAngle;
+      const targetAngleInDegrees = sliceIndex * sliceAngle * 5;
 
       // Calculate how much more we need to rotate to reach the target slice
       const angleToTarget =
@@ -471,6 +475,11 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
       // Set the final target angle and normalize to 0-360°
       this.targetAngle = (normalizedCurrentRotation + angleToTarget) % 360;
 
+      console.log(
+        targetAngleInDegrees,
+        angleToTarget,
+        (normalizedCurrentRotation + angleToTarget) % 360
+      );
       this.spinSpeed = 20; // Reset speed for smooth control
       this.currentSpeed = this.spinSpeed;
       this.rotating = true;
@@ -479,6 +488,12 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
       console.error(`No slice found with label: ${targetText}`);
     }
   }
+  // Prize 1    2.0707963267948966
+  // Prize 2   -1.023598775598299
+  // Prize 3    0.023598775598298705
+  // Prize 4    1.0707963267948966
+  // Prize 5    2.117993877991494
+  // Prize 6    3.1651914291880914
 
   // Update the spinning logic
   public update(): void {
