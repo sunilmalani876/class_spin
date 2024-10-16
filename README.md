@@ -142,3 +142,5 @@ export class TitleScreen extends Container {
 }
 
  -->
+
+<!-- https://www.figma.com/design/wbMq0jSRg61dCSksdnFIJ0/Fortune-wheel-(Community)?node-id=2-840&node-type=frame&t=dg2xFdsYcUHjNSrM-0 -->

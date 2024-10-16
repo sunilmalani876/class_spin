@@ -1,9 +1,10 @@
+import { initAssets } from "./assets";
 import { Application, Assets } from "pixi.js";
 import { designConfig } from "./game/designConfig";
-import { initAssets } from "./assets";
+import { LoadScreen } from "./game/screens/LoadScreen";
 import { navigation } from "./navigation";
 import { storage } from "./stroage";
-import { LoadScreen } from "./game/screens/LoadScreen";
+import { SpinWheel } from "./game/screens/spinwheel";
 import { getUrlParam } from "./utils/utils";
 import { TitleScreen } from "./game/screens/TitleScreen";
 
@@ -62,6 +63,40 @@ async function init() {
 
   // Assign the universal loading screen
   // navigation.setLoadScreen(LoadScreen);
+
+  // await navigation.goToScreen(LoadScreen);
+
+  // Assuming you want to show the spin wheel after the load screen
+  const backendResponse = [
+    "Prize 1",
+    "Prize 2",
+    "Prize 3",
+    "Prize 4",
+    "Prize 5",
+    "Prize 6",
+  ];
+  const targetPrize = "Prize 3"; // This will be the prize where you want the wheel to stop
+
+  // Create and prepare the spin wheel
+  const spinWheel = new SpinWheel();
+  spinWheel.prepare(backendResponse);
+
+  // Spin to stop at the "Prize 3" slice
+  spinWheel.spinToSlice(targetPrize);
+
+  // Navigate to the spin wheel screen
+  await navigation.goToScreen(SpinWheel, backendResponse);
+
+  // Spin to stop at the "Prize 3" slice after a delay (simulate backend response)
+  setTimeout(() => {
+    spinWheel.spinToSlice(targetPrize);
+  }, 600);
+
+  // Add ticker to continuously update the wheel
+  // app.ticker.add(() => {
+  //   spinWheel.update(); // Ensure the update function is called every frame
+  // });
+  // navigation.setLoadScreen(LoadScreen);
   await navigation.goToScreen(TitleScreen);
 
   // await navigation.goToScreen(TitleScreen);
@@ -73,6 +108,7 @@ async function init() {
   //   // await Assets.loadBundle(TitleScreen.assetBundles);
   //   // await navigation.goToScreen(GameScreen);
   // } else if (getUrlParam("loading") !== null) {
+  // await navigation.goToScreen(LoadScreen);
   //   console.log("l");
   //   await navigation.goToScreen(LoadScreen);
   // } else {
