@@ -139,6 +139,26 @@
           }
         }
       ]
+    },
+    {
+      "name": "images/title-screen",
+      "assets": [
+        {
+          "name": [
+            "images/title-screen/title-screen.json"
+          ],
+          "srcs": [
+            "images/title-screen/title-screen@1x.json",
+            "images/title-screen/title-screen@0.5x.json"
+          ],
+          "data": {
+            "tags": {
+              "m": true,
+              "tps": true
+            }
+          }
+        }
+      ]
     }
   ]
 }

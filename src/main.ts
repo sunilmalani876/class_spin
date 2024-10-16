@@ -1,10 +1,11 @@
-import { Application } from "pixi.js";
+import { Application, Assets } from "pixi.js";
 import { designConfig } from "./game/designConfig";
 import { initAssets } from "./assets";
 import { navigation } from "./navigation";
 import { storage } from "./stroage";
 import { LoadScreen } from "./game/screens/LoadScreen";
 import { getUrlParam } from "./utils/utils";
+import { TitleScreen } from "./game/screens/TitleScreen";
 
 /** The PixiJS app Application instance, shared across the project */
 export const app = new Application<HTMLCanvasElement>({
@@ -38,6 +39,10 @@ function resize() {
   navigation.resize(width, height);
 }
 
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 /** Setup app and initialise assets */
 async function init() {
   // Add pixi canvas element (app.view) to the document's body
@@ -56,18 +61,23 @@ async function init() {
   storage.readyStorage();
 
   // Assign the universal loading screen
-  navigation.setLoadScreen(LoadScreen);
+  // navigation.setLoadScreen(LoadScreen);
+  await navigation.goToScreen(TitleScreen);
 
+  // await navigation.goToScreen(TitleScreen);
   // Show first screen - go straight to game if '?play' param is present in url
+
   // This is used for debugging
   // if (getUrlParam("play") !== null) {
   //   console.log("play");
   //   // await Assets.loadBundle(TitleScreen.assetBundles);
   //   // await navigation.goToScreen(GameScreen);
   // } else if (getUrlParam("loading") !== null) {
-  await navigation.goToScreen(LoadScreen);
+  //   console.log("l");
+  //   await navigation.goToScreen(LoadScreen);
   // } else {
-  //   // await navigation.goToScreen(TitleScreen);
+  //   console.log("e");
+  //   await navigation.goToScreen(TitleScreen);
   // }
 }
 

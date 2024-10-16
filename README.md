@@ -70,4 +70,75 @@ export default tseslint.config({
     }
   ]
 }
+
+import gsap from "gsap";
+import { Container } from "pixi.js";
+import { PrimaryButton } from "../../ui/buttons/PrimaryButton";
+import { i18n } from "../../utils/I18n";
+
+/** The screen presented at the start, after loading. */
+/** The screen presented at the start, after loading. */
+export class TitleScreen extends Container {
+  /** A unique identifier for the screen */
+  public static SCREEN_ID = "title";
+  public static assetBundles = ["images/title-screen"];
+
+  private _playBtn!: PrimaryButton;
+  private _bottomAnimContainer = new Container();
+
+  constructor() {
+    super();
+    // Add buttons like the play button
+    this._buildButtons();
+    this.addChild(this._bottomAnimContainer);
+  }
+
+  /** Called before `show` function, can receive `data` */
+  public prepare() {
+    gsap.set(this._bottomAnimContainer, { y: 350 });
+  }
+
+  /** Called when the screen is being shown. */
+  public async show() {
+    gsap.killTweensOf(this);
+    this.alpha = 0;
+    await gsap.to(this, { alpha: 1, duration: 0.2, ease: "linear" });
+    const endData = {
+      y: 0,
+      duration: 0.75,
+      ease: "elastic.out(1, 0.5)",
+    };
+    gsap.to(this._bottomAnimContainer, endData);
+  }
+
+  /** Called when the screen is being hidden. */
+  public async hide() {
+    gsap.killTweensOf(this);
+    await gsap.to(this, { alpha: 0, duration: 0.2, ease: "linear" });
+  }
+
+  /**
+   * Gets called every time the screen resizes.
+   * @param w - width of the screen.
+   * @param h - height of the screen.
+   */
+  public resize(w: number, h: number) {
+    this._playBtn.x = w * 0.5;
+    this._playBtn.y = h * 0.5;
+  }
+
+  /** Add the play button to the screen. */
+  private _buildButtons() {
+    this._playBtn = new PrimaryButton({
+      text: i18n.t("titlePlay"),
+    });
+
+    this._playBtn.onPress.connect(() => {
+      console.log("play");
+    });
+
+    this._bottomAnimContainer.addChild(this._playBtn);
+  }
+}
+
  -->
