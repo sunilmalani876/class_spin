@@ -11,6 +11,7 @@ export const app = new Application<HTMLCanvasElement>({
   // backgroundColor: 0x0d92f4,
 });
 
+app;
 /** Set up a resize function for the app */
 function resize() {
   const windowWidth = window.innerWidth;
@@ -60,19 +61,25 @@ async function init() {
   // await navigation.goToScreen(LoadScreen);
 
   // Assuming you want to show the spin wheel after the load screen
-  const backendResponse = [
-    "Prize 1",
-    "Prize 2",
-    "Prize 3",
-    "Prize 4",
-    "Prize 5",
-    "Prize 6",
-  ];
+  // const backendResponse = [
+  // "p2",
+  // "p3",
+  // "p4",
+  // "p5",
+  // "p6",
+  //   "p7",
+  //   "p8",
+  //   "p9",
+  //   "p0",
+  //   "p1",
+  // ];
+
+  const backendResponse = ["p1", "p2", "p3", "p4", "p5", "p6"];
 
   // Create and prepare the spin wheel
   const spinWheel = new SpinWheel();
-  // console.log(spinWheel);
-  spinWheel.prepare(backendResponse);
+  console.log(spinWheel.spinContainer);
+  // spinWheel.prepare(backendResponse);
 
   // Navigate to the spin wheel screen
   await navigation.goToScreen(SpinWheel, backendResponse);
