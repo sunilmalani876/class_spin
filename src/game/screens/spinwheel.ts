@@ -1,5 +1,4 @@
-import { Container, Graphics, Sprite, Texture, Text, TextStyle } from "pixi.js";
-import gsap from "gsap";
+import { Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import { AppScreen } from "../../navigation";
 
 export class SpinWheel extends Container implements AppScreen<string[]> {
@@ -11,13 +10,17 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
   public numberSpritesContainer: Container;
   private sliceContainer: Container; // New container for holding sprites
   public sliceSprites: Sprite[] = []; // To store the number sprites
+  // @ts-ignore
   private anchorPointer: Graphics; // Anchor pointer to indicate direction
+  // @ts-ignore
+  private spinButton: Text;
 
-  private numSlices = 10; // Number of slices
-  private targetRotation = 0; // The final rotation angle
-  private isSpinning = false; // Track if the wheel is currently spinning
-
-  private spinButton: Text; // Text object to act as a button
+  // Properties for spinning logic
+  private rotating: boolean = false;
+  private stopping: boolean = false;
+  private targetAngle: number = 0;
+  private spinSpeed: number = 20; // Initial spin speed
+  private currentSpeed: number = 0; // Current speed during spin
 
   constructor() {
     super();
@@ -75,7 +78,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     this.anchorPointer.endFill();
 
     this.anchorPointer.position.set(0, -this.spinWheel.height / 2 - 10); // Position above the wheel
-    this.addChild(this.anchorPointer); // Add the anchor pointer to the stage
+    // this.addChild(this.anchorPointer); // Add the anchor pointer to the stage
   }
 
   // Method to draw lines for each slice
@@ -120,42 +123,6 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     }
   }
 
-  // Spin the wheel and stop at a specific index using GSAP
-  public spinAndStopAtIndex(index: number): void {
-    if (this.isSpinning) return; // Prevent multiple spins at once
-    this.isSpinning = true;
-
-    const sliceAngle = 360 / this.numSlices;
-    const targetAngle = sliceAngle * index;
-
-    // Calculate how many full rotations (360 degrees) to add for a smooth spin
-    const fullRotations = 5 * 360; // 5 full rotations before stopping
-
-    console.log(
-      "sliceAngle, targetAngle, fullRotations",
-      sliceAngle,
-      targetAngle,
-      fullRotations
-    );
-
-    // The final rotation angle (full rotations + target angle)
-    this.targetRotation = fullRotations + targetAngle;
-
-    // Use GSAP to animate the spin
-    gsap.to(this.spinContainer, {
-      duration: 5, // Total duration of the spin
-      rotation: (this.targetRotation * Math.PI) / 180, // Convert to radians for Pixi.js
-      ease: "power2.out", // Easing function for a smooth stop
-      onComplete: () => {
-        this.isSpinning = false; // Mark the spinning as done
-        console.log(
-          "Wheel stopped at index:",
-          this.targetRotation / (360 / this.numSlices)
-        );
-      },
-    });
-  }
-
   // Method to create the spin button
   private createSpinButton(): void {
     const buttonStyle = new TextStyle({
@@ -171,23 +138,58 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     this.spinButton.position.set(0, this.spinWheel.height / 2 + 50); // Position below the wheel
 
     this.spinButton.interactive = true;
+    // @ts-ignore
     this.spinButton.buttonMode = true;
 
     // Add a click event listener to the button
     this.spinButton.on("pointerdown", () => {
-      const randomIndex = Math.floor(Math.random() * this.numSlices);
-      this.spinAndStopAtIndex(0); // Spin to a random index
+      this.spinToSlice("num_0"); // Start spinning to a target slice (example: "num_3")
     });
 
     this.addChild(this.spinButton); // Add the button to the stage
   }
 
-  public async show(): Promise<void> {
-    // Add animations if necessary
+  // Method to start spinning to a target slice
+  public spinToSlice(targetText: string): void {
+    const targetSlice = this.sliceSprites.find(
+      (sprite) => sprite.texture.textureCacheIds[0] === targetText
+    );
+    if (targetSlice) {
+      const randomSpins = Math.floor(Math.random() * 4 + 3); // Random spins between 3 and 6
+      const targetIndex = this.sliceSprites.indexOf(targetSlice);
+      const targetAngle = (targetIndex / this.sliceSprites.length) * 360 * 9;
+
+      // ALWASY ADJEST targetAngle
+      console.log("targetIndex", targetIndex, "targetAngle", targetAngle);
+
+      this.targetAngle = randomSpins * 360 + targetAngle - 18;
+      this.spinSpeed = 20; // Initial spin speed
+      this.currentSpeed = this.spinSpeed; // Set current speed for smooth control
+      this.rotating = true; // Start rotating
+      this.stopping = true; // Indicate that we want to stop
+    } else {
+      console.error(`No slice found with label: ${targetText}`);
+    }
   }
 
-  public async hide(): Promise<void> {
-    // Clean up animations or resources
+  // Method to update the wheel's rotation each frame
+  public update(): void {
+    if (this.rotating) {
+      this.spinContainer.rotation += this.currentSpeed * (Math.PI / 180); // Convert degrees to radians
+      if (this.stopping) {
+        if (this.currentSpeed > 0.5) {
+          this.currentSpeed *= 0.98; // Gradually slow down
+        } else {
+          const currentRotation =
+            (this.spinContainer.rotation * (180 / Math.PI)) % 360;
+          const difference = (this.targetAngle - currentRotation + 360) % 360;
+          if (difference < 1) {
+            this.spinContainer.rotation = this.targetAngle * (Math.PI / 180); // Stop at target angle
+            this.rotating = false; // Stop spinning
+          }
+        }
+      }
+    }
   }
 
   // Handle resizing of the screen
