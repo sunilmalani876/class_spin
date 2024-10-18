@@ -58,33 +58,8 @@ async function init() {
   // Assign the universal loading screen
   // navigation.setLoadScreen(LoadScreen);
 
-  // await navigation.goToScreen(LoadScreen);
-
-  // Assuming you want to show the spin wheel after the load screen
-  // const backendResponse = [
-  // "p2",
-  // "p3",
-  // "p4",
-  // "p5",
-  // "p6",
-  //   "p7",
-  //   "p8",
-  //   "p9",
-  //   "p0",
-  //   "p1",
-  // ];
-
-  const backendResponse = ["p1", "p2", "p3", "p4", "p5", "p6"];
-
-  // Create and prepare the spin wheel
-  const spinWheel = new SpinWheel();
-  // spinWheel --> container, graphics -->
-  console.log("spinWheel.spinContainer", spinWheel.spinContainer.children);
-
-  // spinWheel.prepare(backendResponse);
-
   // Navigate to the spin wheel screen
-  await navigation.goToScreen(SpinWheel, backendResponse);
+  await navigation.goToScreen(SpinWheel);
 }
 
 await init();
