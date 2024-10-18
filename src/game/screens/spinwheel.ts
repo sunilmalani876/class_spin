@@ -1,10 +1,15 @@
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import { AppScreen } from "../../navigation";
+import { app } from "../../main";
 
 export class SpinWheel extends Container implements AppScreen<string[]> {
   public static readonly SCREEN_ID = "SpinWheel"; // Required for navigation
   public static assetBundles = ["images/spin"];
   private spinWheel: Sprite;
+  private anchorSprite: Sprite;
+  private anchorStand: Sprite;
+  private backgroundSprite: Sprite;
+
   public spinContainer: Container;
   public sliceLines: Graphics;
   public numberSpritesContainer: Container;
@@ -22,12 +27,31 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
   private spinSpeed: number = 20; // Initial spin speed
   private currentSpeed: number = 0; // Current speed during spin
 
+  // const anchorSprite = new Sprite(anchorTexture);
+  // anchorSprite.anchor.set(0.5); // Center the anchorSprite
+  // anchorSprite.scale.set(0.7);
+  // this.addChild(anchorSprite);
   constructor() {
     super();
     this.spinContainer = new Container();
     this.sliceLines = new Graphics(); // For drawing the slice lines
     this.numberSpritesContainer = new Container(); // New container for number sprites
     this.sliceContainer = new Container(); // New container for number sprites
+
+    const backgraundTexture = Texture.from("Background");
+    this.backgroundSprite = new Sprite(backgraundTexture);
+
+    const anchoTexture = Texture.from("anchor");
+    this.anchorSprite = new Sprite(anchoTexture);
+    this.anchorSprite.anchor.set(0.5); // Center the anchorSprite
+    this.anchorSprite.scale.set(0.5);
+    this.anchorSprite.rotation = 33;
+
+    const spinStand = Texture.from("spinStand_2");
+    this.anchorStand = new Sprite(spinStand);
+    this.anchorStand.anchor.set(0.5); // Center the anchorStand
+    this.anchorStand.scale.set(0.75);
+    this.anchorStand.y = 24;
 
     // Load the wheel texture
     this.spinWheel = new Sprite(Texture.from("spinBack"));
@@ -45,9 +69,9 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     this.spinContainer.addChild(this.numberSpritesContainer); // Add the number sprites container
 
     this.addChild(this.spinContainer);
-
-    // Create the anchor pointer
-    this.createAnchorPointer();
+    // this.addChild(this.backgroundSprite);
+    this.addChild(this.anchorStand);
+    this.addChild(this.anchorSprite);
 
     // Create and add the spin button
     this.createSpinButton();
@@ -63,24 +87,6 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     this.drawSlices(); // Draw the slices after the wheel is set up
   }
 
-  // Method to create the anchor pointer
-  private createAnchorPointer(): void {
-    this.anchorPointer = new Graphics();
-    this.anchorPointer.beginFill(0xff0000); // Red color for the pointer
-    this.anchorPointer.drawPolygon([
-      -10,
-      0, // Left corner
-      10,
-      0, // Right corner
-      0,
-      -20, // Top point (triangle)
-    ]);
-    this.anchorPointer.endFill();
-
-    this.anchorPointer.position.set(0, -this.spinWheel.height / 2 - 10); // Position above the wheel
-    // this.addChild(this.anchorPointer); // Add the anchor pointer to the stage
-  }
-
   // Method to draw lines for each slice
   private drawSlices(): void {
     const numSlices = 10;
@@ -90,7 +96,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
 
     // Start with a clean Graphics object
     this.sliceLines.clear();
-    this.sliceLines.lineStyle(1, 0xffffff, 1); // Set line color (white) and thickness
+    this.sliceLines.lineStyle(1, 0xffffff, 0); // Set line color (white) and thickness
 
     for (let i = 0; i < numSlices; i++) {
       const angle = i * sliceAngle * (Math.PI / 180); // Convert degrees to radians
@@ -143,7 +149,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
 
     // Add a click event listener to the button
     this.spinButton.on("pointerdown", () => {
-      this.spinToSlice("num_0"); // Start spinning to a target slice (example: "num_3")
+      this.spinToSlice("num_1"); // Start spinning to a target slice (example: "num_3")
     });
 
     this.addChild(this.spinButton); // Add the button to the stage
@@ -196,6 +202,6 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
   public resize(w: number, h: number): void {
     this.position.set(w / 2, h / 2); // Center the wheel
     this.spinButton.position.set(0, this.spinWheel.height / 2 + 50); // Reposition button on resize
-    this.anchorPointer.position.set(0, -this.spinWheel.height / 2 - 10); // Adjust anchor position on resize
+    // this.anchorPointer.position.set(0, -this.spinWheel.height / 2 - 10); // Adjust anchor position on resize
   }
 }

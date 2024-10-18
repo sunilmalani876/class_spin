@@ -11,7 +11,6 @@ export const app = new Application<HTMLCanvasElement>({
   // backgroundColor: 0x0d92f4,
 });
 
-app;
 /** Set up a resize function for the app */
 function resize() {
   const windowWidth = window.innerWidth;
@@ -57,6 +56,11 @@ async function init() {
 
   // Assign the universal loading screen
   // navigation.setLoadScreen(LoadScreen);
+
+  // const spinWheel = new SpinWheel();
+  // console.log("spinWheel.spinContainer", spinWheel.children);
+
+  // spinWheel.prepare(backendResponse);
 
   // Navigate to the spin wheel screen
   await navigation.goToScreen(SpinWheel);

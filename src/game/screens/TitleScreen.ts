@@ -7,6 +7,7 @@ import {
   TilingSprite,
 } from "pixi.js";
 import { PrimaryButton } from "../../ui/buttons/PrimaryButton";
+// @ts-ignore
 import { i18n } from "../../utils/I18n";
 import { AppScreen, navigation } from "../../navigation";
 import { storage } from "../../stroage";
