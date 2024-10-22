@@ -121,6 +121,26 @@
       ]
     },
     {
+      "name": "images/buttons",
+      "assets": [
+        {
+          "name": [
+            "images/buttons/buttons.json"
+          ],
+          "srcs": [
+            "images/buttons/buttons@1x.json",
+            "images/buttons/buttons@0.5x.json"
+          ],
+          "data": {
+            "tags": {
+              "m": true,
+              "tps": true
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "images/preload",
       "assets": [
         {

@@ -1,7 +1,7 @@
 import { Application } from "pixi.js";
 import { initAssets } from "./assets";
 import { designConfig } from "./game/designConfig";
-import { SpinWheel } from "./game/screens/spinwheel";
+import { Background } from "./game/screens/overlays/background";
 import { navigation } from "./navigation";
 import { storage } from "./stroage";
 
@@ -54,16 +54,9 @@ async function init() {
   // Set the default local storage data if needed
   storage.readyStorage();
 
-  // Assign the universal loading screen
-  // navigation.setLoadScreen(LoadScreen);
-
-  // const spinWheel = new SpinWheel();
-  // console.log("spinWheel.spinContainer", spinWheel.children);
-
-  // spinWheel.prepare(backendResponse);
-
   // Navigate to the spin wheel screen
-  await navigation.goToScreen(SpinWheel);
+  await navigation.goToScreen(Background);
+  // await navigation.goToScreen(PrimaryBtn);
 }
 
 await init();
