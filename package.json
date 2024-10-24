@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@pixi/ui": "^0.9.1",
+    "canvas-confetti": "^1.9.3",
     "gsap": "^3.12.5",
     "pixi.js": "^7.3.2",
     "react": "^18.3.1",
@@ -32,6 +33,7 @@
     "@assetpack/plugin-texture-packer": "^0.7.0",
     "@assetpack/plugin-webfont": "^0.5.1",
     "@eslint/js": "^9.11.1",
+    "@types/canvas-confetti": "^1.6.4",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",

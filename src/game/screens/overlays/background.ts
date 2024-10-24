@@ -1,7 +1,7 @@
-import { Container, Sprite, spritesheetAsset, Texture } from "pixi.js";
-import { SpinWheel } from "../spinwheel";
-import { PrimaryBtn } from "../../../ui/buttons/primaryBtn";
+import { Container, Sprite, Texture } from "pixi.js";
 import { app } from "../../../main";
+import { PrimaryBtn } from "../../../ui/buttons/primaryBtn";
+import { SpinWheel } from "../spinwheel";
 
 export class Background extends Container {
   public static readonly SCREEN_ID = "Background"; // Required for navigation
@@ -11,9 +11,13 @@ export class Background extends Container {
   private spinWheel: SpinWheel;
   private secondaryBtn: PrimaryBtn;
   private secondaryBtn1: PrimaryBtn;
+  private playBtn: PrimaryBtn;
 
   constructor() {
     super();
+
+    this.spinWheel = new SpinWheel();
+
     const backgroundTexture = Texture.from("Background");
     this.backgroundSprite = new Sprite(backgroundTexture);
     this.backgroundSprite.anchor.set(0.5); // Center the background sprite
@@ -28,18 +32,33 @@ export class Background extends Container {
 
     // secondaryBtn right side
     this.secondaryBtn1 = new PrimaryBtn({ text: "WIN: 0" });
-
     this.secondaryBtn1.x = app.view.width / 8 + 50;
     this.secondaryBtn1.y = app.view.height / 2 - 150;
     this.secondaryBtn1.scale.set(0.65, 0.7);
 
+    this.playBtn = new PrimaryBtn({ text: "SPIN" });
+    this.playBtn.x = app.view.width / 2;
+    this.playBtn.y = app.view.height / 2;
+    this.playBtn.scale.set(0.65, 0.7);
+    this.playBtn.cursor = "pointer";
+    this.playBtn.interactive = true;
+    // @ts-ignore
+    this.playBtn.buttonMode = true;
+
+    this.playBtn.on("pointerdown", () => {
+      console.log("click");
+      if (!this.spinWheel.rotating) {
+        this.spinWheel.startSpin();
+      }
+    });
+
     // Create and add the spin wheel
-    this.spinWheel = new SpinWheel();
 
     this.addChild(this.backgroundSprite);
     this.addChild(this.spinWheel);
-    this.addChild(this.secondaryBtn);
-    this.addChild(this.secondaryBtn1);
+    this.addChild(this.playBtn);
+    // this.addChild(this.secondaryBtn);
+    // this.addChild(this.secondaryBtn1);
   }
 
   public update(): void {
@@ -59,11 +78,13 @@ export class Background extends Container {
     this.backgroundSprite.position.set(w / 2, h / 2);
 
     // spin-wheel
-
     const margin = w * 0.2; // 20%
 
-    // desktop
-    this.spinWheel.position.set(margin, h / 2 - 100);
+    this.spinWheel.position.set(w / 2, h / 2 - 100);
+
+    // secondaryBtn
+    this.playBtn.x = w / 2;
+    this.playBtn.y = h - 150;
 
     // secondaryBtn
     this.secondaryBtn.x = app.view.width / 8 - 250;

@@ -1,0 +1,153 @@
+
+bg_girl.png
+size: 879,215
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 509, 65
+  size: 91, 142
+  orig: 91, 151
+  offset: 0, 0
+  index: -1
+face_close_eye_lips
+  rotate: true
+  xy: 648, 13
+  size: 46, 70
+  orig: 46, 70
+  offset: 0, 0
+  index: -1
+face_eye_close
+  rotate: true
+  xy: 765, 52
+  size: 46, 70
+  orig: 46, 70
+  offset: 0, 0
+  index: -1
+face_idle
+  rotate: true
+  xy: 575, 16
+  size: 47, 71
+  orig: 47, 71
+  offset: 0, 0
+  index: -1
+face_win
+  rotate: true
+  xy: 765, 4
+  size: 46, 70
+  orig: 46, 70
+  offset: 0, 0
+  index: -1
+foot1
+  rotate: false
+  xy: 720, 15
+  size: 43, 44
+  orig: 43, 52
+  offset: 0, 0
+  index: -1
+foot2
+  rotate: true
+  xy: 837, 42
+  size: 56, 40
+  orig: 57, 40
+  offset: 1, 0
+  index: -1
+hair
+  rotate: true
+  xy: 653, 61
+  size: 95, 110
+  orig: 95, 110
+  offset: 0, 0
+  index: -1
+hair_back
+  rotate: true
+  xy: 272, 8
+  size: 68, 145
+  orig: 68, 145
+  offset: 0, 0
+  index: -1
+hair_shadow
+  rotate: true
+  xy: 506, 9
+  size: 54, 67
+  orig: 56, 68
+  offset: 1, 1
+  index: -1
+hand1
+  rotate: false
+  xy: 765, 100
+  size: 83, 113
+  orig: 83, 113
+  offset: 0, 0
+  index: -1
+hand1_shadow
+  rotate: false
+  xy: 95, 3
+  size: 47, 29
+  orig: 55, 39
+  offset: 7, 8
+  index: -1
+hand2
+  rotate: true
+  xy: 419, 9
+  size: 67, 85
+  orig: 67, 85
+  offset: 0, 0
+  index: -1
+handle
+  rotate: false
+  xy: 837, 7
+  size: 37, 33
+  orig: 38, 34
+  offset: 0, 1
+  index: -1
+handle_mask
+  rotate: true
+  xy: 2, 2
+  size: 30, 91
+  orig: 30, 91
+  offset: 0, 0
+  index: -1
+leaf_black
+  rotate: false
+  xy: 272, 146
+  size: 235, 67
+  orig: 235, 67
+  offset: 0, 0
+  index: -1
+leg1
+  rotate: true
+  xy: 272, 78
+  size: 66, 235
+  orig: 66, 242
+  offset: 0, 7
+  index: -1
+leg2
+  rotate: true
+  xy: 509, 158
+  size: 55, 245
+  orig: 55, 250
+  offset: 0, 5
+  index: -1
+neck
+  rotate: true
+  xy: 144, 3
+  size: 29, 41
+  orig: 29, 41
+  offset: 0, 0
+  index: -1
+palm
+  rotate: false
+  xy: 187, 4
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: -1
+table_mask
+  rotate: true
+  xy: 2, 34
+  size: 179, 268
+  orig: 232, 278
+  offset: 49, 3
+  index: -1

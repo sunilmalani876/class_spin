@@ -1,5 +1,6 @@
 import { Container, Graphics, Sprite, Text, TextStyle, Texture } from "pixi.js";
 import { AppScreen } from "../../navigation";
+import { Confetti } from "../../ui/confetti";
 
 export class SpinWheel extends Container implements AppScreen<string[]> {
   public static readonly SCREEN_ID = "SpinWheel";
@@ -12,6 +13,8 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
   // private primaryBtn2: PrimaryBtn;
   public buttonContainer: Container;
 
+  private _Confetti: Confetti;
+
   public spinContainer: Container;
   public sliceLines: Graphics;
   public numberSpritesContainer: Container;
@@ -23,7 +26,7 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
   private spinButton: Text;
 
   // Properties for spinning logic
-  private rotating: boolean = false;
+  public rotating: boolean = false;
   private stopping: boolean = false;
   private targetAngle: number = 0;
   private spinSpeed: number = 20; // Initial spin speed
@@ -36,22 +39,23 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     this.numberSpritesContainer = new Container(); // New container for number sprites
     this.buttonContainer = new Container(); // New container for number sprites
     this.sliceContainer = new Container(); // New container for number sprites
+    this._Confetti = new Confetti();
 
     const backgraundTexture = Texture.from("Background");
     this.backgroundSprite = new Sprite(backgraundTexture);
-    this.backgroundSprite.anchor.set(0.5); // Center the background sprite
-    this.backgroundSprite.scale.set(1); // Adjust as needed based on image size
-    this.backgroundSprite.position.set(0, 0); // Centered position
+    this.backgroundSprite.anchor.set(0.5);
+    this.backgroundSprite.scale.set(1);
+    this.backgroundSprite.position.set(0, 0);
 
     const anchoTexture = Texture.from("anchor");
     this.anchorSprite = new Sprite(anchoTexture);
-    this.anchorSprite.anchor.set(0.5); // Center the anchorSprite
+    this.anchorSprite.anchor.set(0.5);
     this.anchorSprite.scale.set(0.5);
     this.anchorSprite.rotation = 33;
 
     const spinStand = Texture.from("spinStand_2");
     this.anchorStand = new Sprite(spinStand);
-    this.anchorStand.anchor.set(0.5); // Center the anchorStand
+    this.anchorStand.anchor.set(0.5);
     this.anchorStand.scale.set(0.75);
     this.anchorStand.y = 24;
 
@@ -150,6 +154,9 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
       this.currentSpeed = this.spinSpeed; // Set current speed for smooth control
       this.rotating = true; // Start rotating
       this.stopping = true; // Indicate that we want to stop
+
+      // console.log(this.rotating);
+      // console.log(this.stopping);
     } else {
       console.error(`No slice found with index: ${targetText}`);
     }
@@ -183,11 +190,11 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
       }
     });
 
-    this.addChild(this.spinButton); // Add the button to the stage
+    // this.addChild(this.spinButton); // Add the button to the stage
   }
 
   // Method to handle spin start logic
-  private startSpin(): void {
+  public startSpin(): void {
     this.spinSpeed = 20; // Reset spin speed before starting a new spin
     this.currentSpeed = this.spinSpeed;
     this.rotating = true; // Start spinning
@@ -219,6 +226,14 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
           if (difference < 1) {
             this.spinContainer.rotation = this.targetAngle * (Math.PI / 180); // Stop at target angle
             this.rotating = false; // Stop spinning
+
+            // ---For Confetti Effect----
+            setTimeout(() => {
+              if (!this.rotating) {
+                this._Confetti.triggerConfetti();
+              }
+            }, 600);
+
             this.resetSpin(); // Reset spin state after it stops
           }
         }
@@ -235,18 +250,6 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     this.spinButton.interactive = true; // Re-enable the spin button
   }
 
-  // public resize(w: number, h: number): void {
-  //   const backgroundScale = Math.max(
-  //     w / this.backgroundSprite.texture.width,
-  //     h / this.backgroundSprite.texture.height
-  //   );
-  //   // this.backgroundSprite.scale.set(backgroundScale);
-
-  //   this.position.set(w / 2, h / 2);
-
-  //   this.spinButton.position.set(0, this.spinWheel.height / 2 + 50);
-  // }
-
   public resize(w: number, h: number): void {
     // Reference design width and height (adjust based on your design)
 
@@ -256,7 +259,6 @@ export class SpinWheel extends Container implements AppScreen<string[]> {
     // Calculate the scaling factor for the current window size
     const scaleRatio = Math.min(w / baseWidth, h / baseHeight);
 
-    // Apply the scaling factor to the spin container and its elements
     this.scale.set(scaleRatio);
 
     // Adjust the position of the spin wheel to keep it centered
