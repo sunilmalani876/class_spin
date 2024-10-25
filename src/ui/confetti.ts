@@ -2,9 +2,9 @@ import confetti from "canvas-confetti";
 import { Container } from "pixi.js";
 
 export class Confetti extends Container {
-  private count = 200; // Total particles count
+  private count = 200;
   private defaults = {
-    origin: { y: 0.7 }, // Default origin for the confetti
+    origin: { y: 0.7 },
   };
 
   constructor() {
@@ -20,7 +20,6 @@ export class Confetti extends Container {
   }
 
   protected shoot() {
-    // Fire the confetti with different configurations
     this.fire(0.25, {
       spread: 26,
       startVelocity: 55,
@@ -49,7 +48,5 @@ export class Confetti extends Container {
     this.shoot();
   }
 
-  public resize(w: number, h: number) {
-    // Handle any resizing logic if necessary
-  }
+  public resize(w: number, h: number) {}
 }

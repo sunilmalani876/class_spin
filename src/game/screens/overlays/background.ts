@@ -52,8 +52,6 @@ export class Background extends Container {
       }
     });
 
-    // Create and add the spin wheel
-
     this.addChild(this.backgroundSprite);
     this.addChild(this.spinWheel);
     this.addChild(this.playBtn);

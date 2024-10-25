@@ -11,7 +11,6 @@ export const app = new Application<HTMLCanvasElement>({
   // backgroundColor: 0x0d92f4,
 });
 
-/** Set up a resize function for the app */
 function resize() {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
@@ -39,7 +38,6 @@ function resize() {
 
 /** Setup app and initialise assets */
 async function init() {
-  // Add pixi canvas element (app.view) to the document's body
   document.body.appendChild(app.view);
 
   // Whenever the window resizes, call the 'resize' function
